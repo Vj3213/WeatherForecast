@@ -1,5 +1,7 @@
 const initialState = {
-    isLoading: false
+    isLoading: false,
+    data: null,
+    isErrorOccurred: false
 }
 
 const weather = (state = initialState, action) => {
@@ -12,16 +14,20 @@ const weather = (state = initialState, action) => {
         }
 
         case 'FETCH_WEATHER_DATA_SUCCEED': {
+            const { data: { main } = {} } = action;
             return {
                 ...state,
-                isLoading: false
+                isLoading: false,
+                isErrorOccurred: false,
+                data: main
             }
         }
 
         case 'FETCH_WEATHER_DATA_FAILED': {
             return {
                 ...state,
-                isLoading: false
+                isLoading: false,
+                isErrorOccurred: true
             }
         }
 

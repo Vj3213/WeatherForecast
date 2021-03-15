@@ -1,18 +1,22 @@
 import { create } from 'apisauce';
 
 const api = create({
-    baseURL: 'http://api.openweathermap.org/data/2.5/weather',
+    baseURL: 'http://api.openweathermap.org/data/2.5',
     headers: { Accept: 'application/json' }
 })
 
-const params = {
+let params = {
     appid: '3751957f24b7d7c701502d44e73a7bec',
-    units: 'metric'
+    units: 'metric',
+    exclude: 'minutely,hourly,alerts'
 }
 
-export default (location, callback) => {
-    params.q = location
+export default (url, coords, callback) => {
+    params = {
+        ...params,
+        ...coords
+    }
     api
-        .get(null, params)
+        .get(url, params)
         .then(resp => callback(resp && resp.data))
 }

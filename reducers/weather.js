@@ -1,7 +1,8 @@
 const initialState = {
-    isLoading: false,
+    isLoading: true,
     data: null,
-    isErrorOccurred: false
+    isErrorOccurred: false,
+    cityName: null
 }
 
 const weather = (state = initialState, action) => {
@@ -14,12 +15,15 @@ const weather = (state = initialState, action) => {
         }
 
         case 'FETCH_WEATHER_DATA_SUCCEED': {
-            const { data: { main } = {} } = action;
+            const { data: { current, daily } = {} } = action;
             return {
                 ...state,
                 isLoading: false,
                 isErrorOccurred: false,
-                data: main
+                data: {
+                    current,
+                    daily
+                }
             }
         }
 
@@ -28,6 +32,14 @@ const weather = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 isErrorOccurred: true
+            }
+        }
+
+        case 'SET_CITY_NAME':{
+            const { cityName } = action
+            return {
+                ...state,
+                cityName
             }
         }
 

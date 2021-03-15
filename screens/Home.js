@@ -13,6 +13,9 @@ class Home extends Component {
             lat: 19.0144,
             lon: 72.8479
         }
+        this.currDate = new Date().getTime();
+        this.daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        this.oneDayInMilliseconds = 1000 * 60 * 60 * 24;
     }
 
     componentDidMount() {
@@ -64,9 +67,13 @@ class Home extends Component {
 
     renderEachDayWeather = ({ item, index }) => {
         const { temp: { day } } = item;
+        const nextDayInMilliseconds = this.currDate + ((index + 1) * this.oneDayInMilliseconds); //Api data for date is wrong in onecall api hence we have to use this logic
+        const nextDayInNumber = new Date(nextDayInMilliseconds).getDay();
+        const nextDay = this.daysOfWeek[nextDayInNumber];
+
         return (
             <View style={styles.eachDayForecast}>
-                <Text style={styles.dayText}>Monday</Text>
+                <Text style={styles.dayText}>{nextDay}</Text>
                 <Text style={styles.dayText}>{`${Math.round(day)} ℃`}</Text>
             </View>
         )

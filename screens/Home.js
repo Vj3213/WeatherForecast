@@ -27,14 +27,14 @@ class Home extends Component {
                     lon: longitude
                 }
             }
-            this.fetchWeatherData(this.coords);
+            this.fetchWeatherData();
         })
     }
 
-    fetchWeatherData = (coords) => {
+    fetchWeatherData = () => {
         this.props.dispatch({ type: 'FETCH_WEATHER_DATA' });
         // No city name data in onecall api, thats why we have to call weather api to get the city name to display
-        api('/weather', coords, this.setCityName);
+        api('/weather', this.coords, this.setCityName);
     }
 
     setCityName = (data) => {
